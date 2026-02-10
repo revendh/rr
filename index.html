@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Forever ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<style>
+:root{
+ --pink:#ff5f8d;
+ --rose:#ff9aa2;
+ --gold:#ffd36a;
+}
+*{
+ box-sizing:border-box;
+ -webkit-tap-highlight-color: transparent;
+}
+
+html,body{
+ margin:0;
+ width:100%;
+ height:100%;
+ overflow:hidden;
+ font-family:'Georgia',serif;
+ background:#07080c;
+ color:#fff;
+}
+
+/* ================= BACKGROUND ================= */
+.background{
+ position:fixed;
+ inset:0;
+ background:radial-gradient(circle at top,#1a2736,#07080c);
+ z-index:0;
+ overflow:hidden;
+ pointer-events:none;
+}
+
+/* stars */
+.stars span{
+ position:absolute;
+ width:2px;height:2px;
+ background:white;
+ opacity:.6;
+ animation:twinkle 4s infinite;
+}
+@keyframes twinkle{
+ 0%,100%{opacity:.2}
+ 50%{opacity:1}
+}
+
+/* floating hearts */
+.hearts span{
+ position:absolute;
+ bottom:-40px;
+ font-size:22px;
+ animation:floatUp 14s linear infinite;
+ opacity:0;
+}
+@keyframes floatUp{
+ 0%{transform:translateY(0);opacity:0}
+ 20%{opacity:1}
+ 100%{transform:translateY(-120vh);opacity:0}
+}
+
+/* ================= LAYOUT ================= */
+.wrapper{
+ position:relative;
+ z-index:2;
+ height:100%;
+ overflow-y:auto;
+ display:flex;
+ justify-content:center;
+ padding:20px 0;
+}
+
+.card{
+ width:92%;
+ max-width:440px;
+ padding:24px;
+ background:rgba(255,255,255,.08);
+ backdrop-filter:blur(14px);
+ border-radius:30px;
+ text-align:center;
+ box-shadow:0 30px 70px rgba(0,0,0,.6);
+}
+
+/* ================= TEXT ================= */
+h1{font-size:26px;color:#ffd1dc;margin:0}
+.name{font-size:20px;font-style:italic;color:var(--rose)}
+.heart{
+ font-size:64px;
+ animation:pulse 1.4s infinite;
+ margin:10px 0;
+}
+@keyframes pulse{
+ 0%,100%{transform:scale(1)}
+ 50%{transform:scale(1.25)}
+}
+
+/* quotes */
+.quote{
+ display:none;
+ font-size:16px;
+ line-height:1.7;
+ margin-top:14px;
+ animation:fadeIn .8s forwards;
+}
+@keyframes fadeIn{
+ from{opacity:0;transform:translateY(8px)}
+ to{opacity:1}
+}
+
+/* ================= GAME ================= */
+.game{display:none;margin-top:20px}
+.play-area{
+ height:150px;
+ border-radius:18px;
+ background:rgba(255,255,255,.05);
+ overflow:hidden;
+ position:relative;
+}
+.heart-fall{
+ position:absolute;
+ font-size:26px;
+ cursor:pointer;
+ animation:fall 3.8s linear forwards;
+}
+@keyframes fall{
+ from{transform:translateY(-30px)}
+ to{transform:translateY(190px)}
+}
+.meter{
+ height:10px;
+ background:#333;
+ border-radius:10px;
+ overflow:hidden;
+ margin-top:10px;
+}
+.fill{
+ height:100%;
+ width:0%;
+ background:linear-gradient(90deg,var(--pink),var(--rose));
+ transition:width .25s linear;
+}
+
+/* ================= PROPOSAL ================= */
+.proposal{
+ display:none;
+ margin-top:22px;
+ padding:22px;
+ border-radius:24px;
+ background:linear-gradient(135deg,#1e1e1e,#141414);
+ box-shadow:0 0 40px rgba(255,211,106,.8);
+}
+.ring{
+ font-size:68px;
+ cursor:pointer;
+ animation:ringGlow 1.6s infinite alternate;
+}
+@keyframes ringGlow{
+ from{text-shadow:0 0 10px gold}
+ to{text-shadow:0 0 30px gold}
+}
+
+/* buttons */
+.buttons{
+ display:flex;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-top:14px;
+}
+button{
+ flex:1;
+ padding:14px;
+ border:none;
+ border-radius:28px;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.yes{
+ background:linear-gradient(135deg,var(--pink),var(--rose));
+ color:white;
+}
+.no{
+ background:rgba(255,255,255,.15);
+ color:white;
+}
+
+/* ================= POPUP (FIXED) ================= */
+.popup{
+ position:fixed;
+ inset:0;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ background:rgba(0,0,0,.65);
+ z-index:5;
+ padding:20px;
+}
+.popup-content{
+ background:white;
+ color:#333;
+ padding:26px;
+ border-radius:20px;
+ text-align:center;
+ max-width:320px;
+ width:100%;
+}
+
+/* ================= FIREWORKS (TOP LAYER) ================= */
+canvas{
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ z-index:10;
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="background">
+ <div class="stars">
+  <script>
+   for(let i=0;i<120;i++){
+    document.write(`<span style="left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*4}s"></span>`);
+   }
+  </script>
+ </div>
+ <div class="hearts">
+  <script>
+   ["❤️","💖","💕"].forEach(e=>{
+    for(let i=0;i<3;i++){
+     document.write(`<span style="left:${Math.random()*100}%;animation-delay:${Math.random()*14}s">${e}</span>`);
+    }
+   });
+  </script>
+ </div>
+</div>
+
+<canvas id="fx"></canvas>
+
+<div class="wrapper">
+ <div class="card">
+  <h1>My Forever ❤️</h1>
+  <div class="name">[Her Name]</div>
+  <div class="heart">❤️</div>
+
+  <div class="quote" id="q1">In every universe, my heart finds you.</div>
+  <div class="quote" id="q2">Loving you is the best thing I’ve ever done.</div>
+
+  <div class="game" id="game">
+   <h3>Catch My Heart 💖</h3>
+   <div class="play-area" id="area"></div>
+   <div class="meter"><div class="fill" id="fill"></div></div>
+  </div>
+
+  <div class="proposal" id="proposal">
+   <div class="ring" id="ring">💍✨</div>
+   <h2 id="propText">Will you marry me?</h2>
+   <div class="buttons">
+    <button class="yes" onclick="yes()">YES 💖</button>
+    <button class="no" onclick="nope()">NO 🙈</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div class="popup" id="popup">
+ <div class="popup-content" id="popupText"></div>
+</div>
+
+<script>
+/* quotes */
+["q1","q2"].forEach((id,i)=>{
+ setTimeout(()=>document.getElementById(id).style.display="block",i*1600);
+});
+
+/* game */
+setTimeout(()=>{
+ document.getElementById("game").style.display="block";
+ startGame();
+},3400);
+
+let love=0;
+function startGame(){
+ setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart-fall";
+  h.innerText="❤️";
+  h.style.left=Math.random()*85+"%";
+  h.onclick=()=>{
+   love+=10;
+   document.getElementById("fill").style.width=love+"%";
+   h.remove();
+   if(love>=100){
+    document.getElementById("proposal").style.display="block";
+    document.getElementById("proposal").scrollIntoView({behavior:"smooth"});
+   }
+  };
+  document.getElementById("area").appendChild(h);
+  setTimeout(()=>h.remove(),3800);
+ },900);
+}
+
+/* ring */
+let ringCount=0;
+document.getElementById("ring").onclick=()=>{
+ ringCount++;
+ fireworks();
+ if(ringCount>=3){
+  document.getElementById("propText").innerText="Forever sealed ♾️💍❤️";
+  fireworks();fireworks();
+ }
+};
+
+/* YES / NO */
+function yes(){
+ document.getElementById("popupText").innerHTML=`
+ 💖💍<br><br>
+ You just made me the happiest person alive!<br>
+ Forever starts now ♾️❤️<br><br>
+ <button onclick="closePop()">Okay 😭❤️</button>`;
+ document.getElementById("popup").style.display="flex";
+ fireworks();fireworks();
+}
+function nope(){
+ document.getElementById("popupText").innerHTML=`
+ 😜❤️<br><br>
+ No is just a button,<br>
+ not an option 💕<br><br>
+ <button onclick="closePop()">Okay 😄</button>`;
+ document.getElementById("popup").style.display="flex";
+}
+
+/* close popup */
+function closePop(){
+ document.getElementById("popup").style.display="none";
+}
+
+/* fireworks (FULL SCREEN, TOP LAYER) */
+const canvas=document.getElementById("fx");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let p=[];
+function fireworks(){
+ for(let i=0;i<220;i++){
+  p.push({
+   x:Math.random()*canvas.width,
+   y:Math.random()*canvas.height,
+   vx:(Math.random()-0.5)*8,
+   vy:(Math.random()-0.5)*8,
+   life:100
+  });
+ }
+ animate();
+}
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ p.forEach((a,i)=>{
+  a.x+=a.vx;a.y+=a.vy;a.life--;
+  ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+  ctx.fillRect(a.x,a.y,4,4);
+  if(a.life<=0)p.splice(i,1);
+ });
+ if(p.length>0)requestAnimationFrame(animate);
+}
+</script>
+
+</body>
+</html>
